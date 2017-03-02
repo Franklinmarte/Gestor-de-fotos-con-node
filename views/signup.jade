@@ -1,15 +1,21 @@
 extends ./layout.jade
 block contenido
 	div(class="col-md-6 remove-float center-block  big-top-space" )
-		form(action="/sessions" method="POST")
+		form(action="/users" method="POST")
 			div(class="form-group")
 				label(for="email") Email
 				input(type="text" name="email" id="email" class="form-control")
 			div(class="form-group")
+				label(for="username") username
+				input(type="text" name="username" id="pass" class="form-control" )
+			div(class="form-group")
 				label(for="pass") Password
 				input(type="Password" name="pass" id="email" class="form-control" )
+			div(class="form-group")
+				label(for="pass") Password Confirmation
+				input(type="Password" name="pass_confirmation" id="pass" class="form-control" )
 			div(class="row")
 				div(class="col-xs-12 col-sm-6")
-					input(type="submit" value="iniciar sesion" class="btn btn-info")
+					input(type="submit" value="Registrarse" class="btn btn-info")
 				div(class="col-xs-12 col-sm-6 text-right")
-					a(href="/signup") No tengo cuenta	
+					a(href="/login") Ya tengo cuenta	
