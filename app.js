@@ -4,11 +4,12 @@ var User = require("./models/user").User;
 var cookieSession = require("cookie-session");
 var session_middlewares = require("./middlewares/session");
 var router_app = require("./router_app");
+var methodOverride = require("method-override");
 var app = express();
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-
+app.use(methodOverride("_method"));
 app.use(cookieSession({
 	name: "session",
 	keys: ["llave-1","llave-2"]
