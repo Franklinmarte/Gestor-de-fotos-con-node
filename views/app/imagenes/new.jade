@@ -1,13 +1,13 @@
 extends ../../layout.jade
 block contenido
 	div(class="col-md-6 remove-float center-block  big-top-space" )
-		form(action="/app/imagenes" method="POST")
+		form(action="/app/imagenes"  enctype="multipart/form-data" method="POST" )
 			div(class="form-group")
 				label(for="title") Titulo
 				input(type="text" name="title" id="title" class="form-control")
 			div(class="form-group")
 				label(for="imagen") Subir Imagen
-				input(type="file" name="imagen" id="imagen" class="form-control" )
+				input(type="file" name="archivo" id="archivo" class="form-control" )
 			div(class="row")
 				div(class="col-xs-12 col-sm-6")
 					input(type="submit" value="Guardar" class="btn btn-info")

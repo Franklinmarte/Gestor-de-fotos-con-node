@@ -4,6 +4,8 @@ var User = require("./models/user").User;
 var cookieSession = require("cookie-session");
 var session_middlewares = require("./middlewares/session");
 var router_app = require("./router_app");
+var formidable = require("express-formidable");
+
 var methodOverride = require("method-override");
 var app = express();
 app.use(express.static("public"));
@@ -14,7 +16,7 @@ app.use(cookieSession({
 	name: "session",
 	keys: ["llave-1","llave-2"]
 }));
-
+app.use(formidable.parse({keepExtensions:true}));
 app.set("view engine", "jade");
 app.get("/",function(req, res){
 	console.log(req.session.user_id);
