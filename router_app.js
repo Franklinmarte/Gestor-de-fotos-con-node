@@ -2,6 +2,9 @@ var express =require("express");
 var Imagen = require("./models/imagenes");
 var image_find_middleware = require("./middlewares/find_image");
 var fs = require("fs");
+var redis = require("redis");
+
+var client = redis.createClient();
 
 var router =express.Router();
 
@@ -27,6 +30,7 @@ router.get("/imagenes/:id/edit", function(req, res){
 
 router.route("/imagenes/:id")
  .get(function(req,res){
+
 	res.render("app/imagenes/show");
 	
 	
@@ -72,6 +76,13 @@ router.route("/imagenes")
 	var imagen = new Imagen(data);
 	imagen.save(function(err){
 		if (!err) {
+			var imgJSON = {
+				"id": imagen._id,
+				"title": imagen.title,
+				"extension": imagen.extension
+			};
+
+				client.publish("images",JSON.stringify(imgJSON));
 			fs.rename(req.body.archivo.path, "public/imagenes/"+imagen._id+"."+extension);
 			res.redirect("/app/imagenes/"+imagen._id);
 

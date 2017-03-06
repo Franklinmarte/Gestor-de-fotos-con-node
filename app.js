@@ -1,21 +1,34 @@
 var express =require("express");
 var bodyParser = require("body-parser");
 var User = require("./models/user").User;
-var cookieSession = require("cookie-session");
+var session = require("express-session");
 var session_middlewares = require("./middlewares/session");
 var router_app = require("./router_app");
 var formidable = require("express-formidable");
+var RedisStore = require("connect-redis")(session);
+var http = require("http");
+var realtime = require("./realtime");
 
 var methodOverride = require("method-override");
+
 var app = express();
+var server = http.Server(app);
+
+
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
-app.use(cookieSession({
-	name: "session",
-	keys: ["llave-1","llave-2"]
-}));
+
+var sessionMiddewares = session({
+	store: new RedisStore({}),
+	secret: "8292302164"
+});
+
+app.use(sessionMiddewares);
+
+realtime(server,sessionMiddewares);
+
 app.use(formidable.parse({keepExtensions:true}));
 app.set("view engine", "jade");
 app.get("/",function(req, res){
@@ -51,4 +64,4 @@ app.post("/sessions",function(req, res){
 app.use("/app",session_middlewares);
 app.use("/app",router_app);
 
-app.listen(8080);
+server.listen(8080);
