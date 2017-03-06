@@ -32,14 +32,26 @@ realtime(server,sessionMiddewares);
 app.use(formidable.parse({keepExtensions:true}));
 app.set("view engine", "jade");
 app.get("/",function(req, res){
-	console.log(req.session.user_id);
+
 	res.render("index");
 })
 app.get("/signup",function(req, res){
 	res.render("signup");
 });
 app.get("/login",function(req, res){
-	res.render("login");
+	
+	if (req.session.user_id) {
+		res.redirect("/app");
+		
+	}else
+	{
+
+console.log(req.session.user_id);
+		res.render("login");
+	}
+	
+	
+
 })
 app.post("/users",function(req, res){
 	var user = new User({email: req.body.email,
@@ -56,8 +68,16 @@ app.post("/users",function(req, res){
 app.post("/sessions",function(req, res){
 	User.findOne({email:req.body.email, password: req.body.pass},function(err,user){	
 		
+		if (!err && user !=null) {
+
 		req.session.user_id = user._id;
 		res.redirect("/app")
+		}
+		else
+		{
+			console.log(String(err));
+			res.redirect("/login");
+		}
 
 	});
 });

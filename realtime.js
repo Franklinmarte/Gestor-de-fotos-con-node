@@ -17,6 +17,6 @@ module.exports = function(server, sessionMiddlewares)
 		}
 	});
 	io.sockets.on("connection",function(socket){
-		console.log(socket.request.session.user_id);
+		
 	})
 }
