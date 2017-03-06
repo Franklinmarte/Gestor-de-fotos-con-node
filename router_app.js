@@ -14,7 +14,7 @@ router.get("/", function(req, res){
 		.exec(function(err,imagenes){
 			if (err) {console.log(err)}
 			res.render("app/home",{imagenes:imagenes});
-		
+				
 
 		})
 });
@@ -64,7 +64,7 @@ router.route("/imagenes")
 .get(function(req,res){
 	Imagen.find({},function(err, imagenes){
 		if(err){res.redirect("/app"); return;};
-		console.log(res.locals.user._id);
+		
 		res.render("app/imagenes/index",{imagenes:imagenes});
 	})
 })
@@ -94,7 +94,5 @@ router.route("/imagenes")
 		}
 	})
 });
-
-
 
 module.exports = router;

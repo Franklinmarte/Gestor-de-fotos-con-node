@@ -14,6 +14,7 @@ module.exports = function(server, sessionMiddlewares)
 	client.on("message",function(channel, message){
 		if (channel=="images") {
 			io.emit("new image", message)
+			
 		}
 	});
 	io.sockets.on("connection",function(socket){

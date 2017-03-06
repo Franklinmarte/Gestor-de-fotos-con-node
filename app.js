@@ -67,15 +67,13 @@ app.post("/users",function(req, res){
 });
 app.post("/sessions",function(req, res){
 	User.findOne({email:req.body.email, password: req.body.pass},function(err,user){	
-		
-		if (!err && user !=null) {
-
+		//seach user and password to mongodb
+		if (!err && user !=null) { //validate user and password correct
 		req.session.user_id = user._id;
 		res.redirect("/app")
 		}
-		else
+		else // user or password not correct, redirect to login
 		{
-			console.log(String(err));
 			res.redirect("/login");
 		}
 
