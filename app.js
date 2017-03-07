@@ -68,7 +68,7 @@ app.post("/users",function(req, res){
 						 password_confirmation: req.body.pass_confirmation,
 						 username: req.body.username});
 	user.save().then(function(us){
-		res.send("Guardamos al usuario correctamente")
+		res.redirect("/login");
 	},function(err){
 		console.log(String(err));
 		res.send("No pudimos guardar al usuario debido a")
