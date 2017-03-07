@@ -1,5 +1,6 @@
 extends ../../layout.jade
 block contenido
+	include ../../menu_app.jade
 	div(class="col-md-6 remove-float center-block  big-top-space" )
 		form(action="/app/imagenes"  enctype="multipart/form-data" method="POST" )
 			div(class="form-group")

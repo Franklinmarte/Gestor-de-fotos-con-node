@@ -1,5 +1,6 @@
 extends ../../layout.jade
 block contenido
+	include ../../menu_app.jade
 	div(class="img-containe")
 		p= imagen.title
 		img(src="/imagenes/#{imagen._id}.#{imagen.extension}" class="main-img")

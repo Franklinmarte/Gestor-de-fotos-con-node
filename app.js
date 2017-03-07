@@ -33,11 +33,24 @@ app.use(formidable.parse({keepExtensions:true}));
 app.set("view engine", "jade");
 app.get("/",function(req, res){
 
-	res.render("index");
+if (req.session.user_id) {
+		res.redirect("/app");
+		
+	}else
+	{
+		res.render("index");
+	}
+	
 })
 app.get("/signup",function(req, res){
 	res.render("signup");
 });
+
+app.get("/signout",function(req, res){
+	req.session.destroy();
+	res.redirect("/login");
+})
+
 app.get("/login",function(req, res){
 	
 	if (req.session.user_id) {
@@ -45,14 +58,10 @@ app.get("/login",function(req, res){
 		
 	}else
 	{
-
-console.log(req.session.user_id);
 		res.render("login");
 	}
-	
-	
-
-})
+});
+//create new user
 app.post("/users",function(req, res){
 	var user = new User({email: req.body.email,
 						 password: req.body.pass,
@@ -65,6 +74,7 @@ app.post("/users",function(req, res){
 		res.send("No pudimos guardar al usuario debido a")
 	})
 });
+//validate correct user 
 app.post("/sessions",function(req, res){
 	User.findOne({email:req.body.email, password: req.body.pass},function(err,user){	
 		//seach user and password to mongodb

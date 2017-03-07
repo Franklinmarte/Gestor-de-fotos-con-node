@@ -8,6 +8,6 @@ socket.on("new image", function(data) {
 
 	var template = Handlebars.compile(source);
 
-		container.innerHTML += template(data);
+		container.innerHTML = template(data) + container.innerHTML;
 	
 })
